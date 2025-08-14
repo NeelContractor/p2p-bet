@@ -1,5 +1,5 @@
-import { DashboardFeature } from '@/components/dashboard/dashboard-feature'
+import Bet from '@/components/bet/Bet'
 
 export default function Home() {
-  return <DashboardFeature />
+  return <Bet />
 }

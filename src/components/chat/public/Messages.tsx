@@ -10,14 +10,25 @@ import { getRandomGradient } from "@/app/lib/gradient"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Loader2, ExternalLink, ThumbsUp, MessageSquare } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+// import { useToast } from "@/hooks/use-toast"
 import { shortenPublicKey } from "@/app/lib/utils"
-import { Button } from "./ui/button"
 import { clusterApiUrl, Connection } from "@solana/web3.js"
 import { formatTimestamp } from "@/app/lib/utils"
 import "@dialectlabs/blinks/index.css"
-import { Card } from "./ui/card"
 import {DM_Sans} from "next/font/google"
+import { Message } from "./PublicChat"
+import { User } from "@prisma/client"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+
+export interface ChatMessage{
+    id: string | number,
+    content: string | null,
+    sender: User | null,
+    senderId: string | null,
+    chatId: string | null,
+    timestamp: string | null,
+}
 
 const dmsans = DM_Sans({style: 'normal', subsets: ["latin"]});
 

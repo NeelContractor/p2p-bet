@@ -20,7 +20,7 @@ export async function GET(req: Request) {
         return NextResponse.json(messages, { status: 200 });
     } catch (err) {
         if (err instanceof Error) {
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: err.message }, { status: 500 });
         }
         return NextResponse.json({ error: "Internet Server Error" }, { status: 500 });
     }

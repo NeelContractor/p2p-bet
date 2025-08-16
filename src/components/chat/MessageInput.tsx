@@ -9,7 +9,6 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Bot } from "lucide-react"
 import { cn } from "@/lib/utils"
-// import { useAgentStream } from '@/hooks/useAgentStream';
 
 export function MessageInput({chatId} : {chatId?: string}){
 //   const { streamAgentResponse, isStreaming } = useAgentStream();
@@ -32,24 +31,6 @@ export function MessageInput({chatId} : {chatId?: string}){
                 messageContent: optimisticInput, 
                 walletPublicKey, 
             });
-
-            // if (isAgent) {
-            //     let accumulatedResponse = '';
-            //     const fullResponse = await streamAgentResponse(
-            //     optimisticInput.replace('@polyagent', '').trim(),
-            //         (chunk) => {
-            //         accumulatedResponse += chunk;
-            //         },
-            //         () => {
-            //         }
-            //     );
-        
-            //     await axios.post('/api/send', {
-            //     messageContent: fullResponse,
-            //     walletPublicKey: AGENT.walletPublicKey,
-            //     isAgent: true
-            //     });
-            // }
 
             if (chatId) {
                 await axios.post('/api/message/sendToPrivateChat', { 

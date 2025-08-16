@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BetCard } from "./BetCard"
 import { ScrollArea } from "../ui/scroll-area"
-// import type { Bet } from "@/types"
 import { ArrowRight, DollarSign, Percent, Trophy } from "lucide-react"
 import { ChevronRight } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"

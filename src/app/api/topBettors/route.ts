@@ -1,5 +1,4 @@
 import { useBetProgram } from "@/components/bet/bet-data-access";
-import { useConnection } from "@solana/wallet-adapter-react";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request){

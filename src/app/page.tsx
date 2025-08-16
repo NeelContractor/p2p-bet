@@ -1,5 +1,8 @@
-import Bet from '@/components/bet/Bet'
+
+import HomePage from '@/components/home/Home'
 
 export default function Home() {
-  return <Bet />
+  return (
+    <HomePage />
+  )
 }

@@ -1,9 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
+"use client"
 import { useEffect, useState } from "react";
 import { Badge } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Messages, UserAvatar } from "./Messages";
+import { MessageInput } from "../MessageInput";
+import { pusherClient } from "@/lib/pusher";
+import { User } from "@prisma/client";
+
+export interface Message{
+    id: string | number,
+    content: string | null,
+    sender: User | null,
+    senderId: string | null,
+    timestamp: string | null
+}
+
+export interface ChatBet { 
+    betTitle: string,
+    betPubKey: string,
+}
+  
 
 export function OnlineUsers({ channel, currentUser }: { channel: string, currentUser: User }) { // User prisma User table interface/type
     const [onlineUsers, setOnlineUsers] = useState<User[]>([]);
@@ -70,18 +88,16 @@ export function OnlineUsers({ channel, currentUser }: { channel: string, current
 
 export function PublicChat({ userId, initialMessages, bets } : { userId: string, initialMessages: Message[], bets: ChatBet[] }){
     return (
-        // <WalletProvider wallets={[]} autoConnect>
-        // <WalletModalProvider>
             <div className="flex h-full w-full">
                 <div className="flex-1 flex flex-col">
-                    <CommandSearch chatBets={bets}/>
+                    {/* <CommandSearch chatBets={bets}/> */}
                     <div className="flex-1 overflow-scroll">
                         {initialMessages.length > 0 && userId && (
                             <Messages
-                            initialMessages={initialMessages}
-                            currentUserId={userId}
-                            channel="global-chat"
-                            event="incoming-message"
+                                initialMessages={initialMessages}
+                                currentUserId={userId}
+                                channel="global-chat"
+                                event="incoming-message"
                             />
                         )}
                     </div>
@@ -91,7 +107,5 @@ export function PublicChat({ userId, initialMessages, bets } : { userId: string,
                 </div>
                 {/* <OnlineUsers channel="global-chat" currentUser={currentUser} /> */}
             </div>
-        // </WalletModalProvider>
-        // </WalletProvider>
     );
 }

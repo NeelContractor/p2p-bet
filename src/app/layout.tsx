@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   description: 'P2p Chat based Betting App on Solana.',
 }
 
-
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>

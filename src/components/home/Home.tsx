@@ -3,16 +3,21 @@
 import { useProfile } from "@/hooks/useProfile";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
+import { PublicChat } from "../chat/public/PublicChat";
+import { useChatMessages } from "@/hooks/useMessages";
+import { Skeleton } from "../ui/skeleton";
 
 export interface ChatBet {
     betTitle: string,
     betPubKey: string
 }
 
-export default function Home() {
+export default function HomePage() {
     const { connected, publicKey } = useWallet();
     const [bets, setBets] = useState<ChatBet[]>([]);
-    const { profile, error, loading } = useProfile();
+    
+    const { profile, loading: profileLoading, error:profileError } = useProfile(publicKey?.toString());
+    const {initialMessages, loading: messagesLoading, error: messagesError} = useChatMessages();
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || (process.env.NODE_ENV === "development") ? "http://localhost:3000" : ""; // TODO add url
 
     useEffect(() => {
@@ -40,13 +45,64 @@ export default function Home() {
         )
     }
 
+    if (messagesLoading || profileLoading) {
+        return (
+          <div className="flex h-screen">
+            <div className="flex-1 overflow-hidden">
+              <ChatSkeleton />
+            </div>
+          </div>
+        );
+      }
+  
+    if (profileError || messagesError) {
+      return (
+        <div className="flex-1 w-full flex items-center justify-center">
+          <p className="text-lg text-destructive">
+            Error loading profile. Please try again or reconnect your wallet.
+          </p>
+        </div>
+      )
+    }
+  
+    if (messagesError) {
+      return (
+        <div className="flex-1 w-full flex items-center justify-center">
+          <p className="text-lg text-destructive">
+            Error loading messages. Please try again.
+          </p>
+        </div>
+      )
+    }
+
     const userId = profile?.id?.toString() || "";
 
     return <div className="flex h-screen">
         <div className="flex-1 overflow-hidden">
-            {userId && initialMessages.lenght > 0 && bets && bets.length > 0 && (
+            {userId && initialMessages && initialMessages.length > 0 && bets && bets.length>0 && (
                 <PublicChat userId={userId} initialMessages={initialMessages} bets={bets} />
             )}
         </div>
     </div>
 }
+
+function ChatSkeleton() {
+    return (
+      <div className="flex flex-col h-full w-full bg-background">
+        <div className="flex-1 overflow-y-auto p-4 space-y-6 w-full">
+          {[...Array(10)].map((_, i) => (
+            <div key={i} className={`flex ${i % 2 === 0 ? 'justify-end' : 'justify-start'} w-full`}>
+              <div className={`flex items-end space-x-3 ${i % 2 === 0 ? 'flex-row-reverse space-x-reverse' : ''} max-w-[80%] w-full`}>
+                <Skeleton className="h-10 w-10 rounded-full flex-shrink-0" />
+                <div className={`space-y-4 flex-grow ${i % 2 === 0 ? 'items-end' : 'items-start'}`}>
+                  {/* <Skeleton className={h-4 w-[72rem] ${i % 2 === 0 ? 'ml-auto' : ''}} /> */}
+                  <Skeleton className={`h-14 py-4 w-[80rem] rounded-xl`} />
+                  {/* <Skeleton className={h-2 w-[72rem] ${i % 2 === 0 ? 'ml-auto' : ''}} /> */}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }

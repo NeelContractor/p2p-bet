@@ -3,7 +3,6 @@ import { useBetProgram } from "@/components/bet/bet-data-access";
 import * as anchor from "@coral-xyz/anchor";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -11,8 +10,6 @@ export async function POST(req: Request) {
         const { program } = useBetProgram();
         const { userAddress } = await req.json();
         const userPubkey = new PublicKey(userAddress);
-        const { connection } = useConnection();
-        const wallet = { publicKey: userPubkey } as anchor.Wallet;
 
         const allUserBets = (await program.account.userBet.all()).map(acc => acc.account);
         const betsForGivenUser = allUserBets.filter(userBet => userBet.user.toBase58() == userPubkey.toBase58())

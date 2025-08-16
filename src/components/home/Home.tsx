@@ -12,7 +12,7 @@ export interface ChatBet {
     betPubKey: string
 }
 
-export default function HomePage() {
+export default function Home() {
     const { connected, publicKey } = useWallet();
     const [bets, setBets] = useState<ChatBet[]>([]);
     
@@ -80,7 +80,7 @@ export default function HomePage() {
     return <div className="flex h-screen">
         <div className="flex-1 overflow-hidden">
             {userId && initialMessages && initialMessages.length > 0 && bets && bets.length>0 && (
-                <PublicChat userId={userId} initialMessages={initialMessages} bets={bets} />
+              <PublicChat userId={userId} initialMessages={initialMessages} bets={bets} />
             )}
         </div>
     </div>

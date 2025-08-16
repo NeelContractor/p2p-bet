@@ -10,7 +10,6 @@ import { getRandomGradient } from "@/app/lib/gradient"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Loader2, ExternalLink, ThumbsUp, MessageSquare } from "lucide-react"
-// import { useToast } from "@/hooks/use-toast"
 import { shortenPublicKey } from "@/app/lib/utils"
 import { clusterApiUrl, Connection } from "@solana/web3.js"
 import { formatTimestamp } from "@/app/lib/utils"
@@ -284,7 +283,13 @@ const BlinkComponent = ({ actionApiUrl }: { actionApiUrl: string }) => {
 
     return (
         <div className="w-full overflow-hidden rounded-lg border border-emerald-500/20">
-            <Blink action={action} stylePreset="x-dark" adapter={adapter} securityLevel="all" />
+            <Blink 
+                // action={action} 
+                blink={action} 
+                stylePreset="x-dark" 
+                adapter={adapter} 
+                securityLevel="all"
+            />
         </div>
     )
 }

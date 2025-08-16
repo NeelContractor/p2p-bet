@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export interface Message {
@@ -5,7 +6,7 @@ export interface Message {
     content: string  | null,
     sender: User | null, // Prisma client User 
     senderId: string | null,
-    timestamp: boolean | null,
+    timestamp: string | null,
     isAgent: boolean | null,
 }
 
